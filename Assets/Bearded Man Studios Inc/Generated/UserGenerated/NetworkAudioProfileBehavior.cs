@@ -4,13 +4,15 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedRPC("{\"types\":[[\"Color\"]]")]
-	[GeneratedRPCVariableNames("{\"types\":[[\"color\"]]")]
-	public abstract partial class ExampleProximityPlayerBehavior : NetworkBehavior
+	[GeneratedRPC("{\"types\":[[\"string\", \"int\"][\"uint\"][\"uint\"]]")]
+	[GeneratedRPCVariableNames("{\"types\":[[\"uri\", \"type\"][\"netId\"][\"netId\"]]")]
+	public abstract partial class NetworkAudioProfileBehavior : NetworkBehavior
 	{
-		public const byte RPC_SEND_COLOR = 0 + 5;
+		public const byte RPC_FETCH_SOURCE = 0 + 5;
+		public const byte RPC_ATTACH = 1 + 5;
+		public const byte RPC_DETACH = 2 + 5;
 		
-		public ExampleProximityPlayerNetworkObject networkObject = null;
+		public NetworkAudioProfileNetworkObject networkObject = null;
 
 		public override void Initialize(NetworkObject obj)
 		{
@@ -18,11 +20,13 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (networkObject != null && networkObject.AttachedBehavior != null)
 				return;
 			
-			networkObject = (ExampleProximityPlayerNetworkObject)obj;
+			networkObject = (NetworkAudioProfileNetworkObject)obj;
 			networkObject.AttachedBehavior = this;
 
 			base.SetupHelperRpcs(networkObject);
-			networkObject.RegisterRpc("SendColor", SendColor, typeof(Color));
+			networkObject.RegisterRpc("FetchSource", FetchSource, typeof(string), typeof(int));
+			networkObject.RegisterRpc("Attach", Attach, typeof(uint));
+			networkObject.RegisterRpc("Detach", Detach, typeof(uint));
 
 			networkObject.onDestroy += DestroyGameObject;
 
@@ -78,7 +82,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		public override void Initialize(NetWorker networker, byte[] metadata = null)
 		{
-			Initialize(new ExampleProximityPlayerNetworkObject(networker, createCode: TempAttachCode, metadata: metadata));
+			Initialize(new NetworkAudioProfileNetworkObject(networker, createCode: TempAttachCode, metadata: metadata));
 		}
 
 		private void DestroyGameObject(NetWorker sender)
@@ -89,7 +93,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		public override NetworkObject CreateNetworkObject(NetWorker networker, int createCode, byte[] metadata = null)
 		{
-			return new ExampleProximityPlayerNetworkObject(networker, this, createCode, metadata);
+			return new NetworkAudioProfileNetworkObject(networker, this, createCode, metadata);
 		}
 
 		protected override void InitializedTransform()
@@ -99,9 +103,20 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		/// <summary>
 		/// Arguments:
-		/// Color color
+		/// string uri
+		/// int type
 		/// </summary>
-		public abstract void SendColor(RpcArgs args);
+		public abstract void FetchSource(RpcArgs args);
+		/// <summary>
+		/// Arguments:
+		/// uint netId
+		/// </summary>
+		public abstract void Attach(RpcArgs args);
+		/// <summary>
+		/// Arguments:
+		/// uint netId
+		/// </summary>
+		public abstract void Detach(RpcArgs args);
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}
