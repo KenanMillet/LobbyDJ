@@ -4,17 +4,12 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedRPC("{\"types\":[[\"uint\"][\"uint\"][\"string\", \"int\"][\"int\"][]]")]
-	[GeneratedRPCVariableNames("{\"types\":[[\"netId\"][\"netId\"][\"uri\", \"type\"][\"timeSamples\"][]]")]
-	public abstract partial class NetworkAudioProfileBehavior : NetworkBehavior
+	[GeneratedRPC("{\"types\":[]")]
+	[GeneratedRPCVariableNames("{\"types\":[]")]
+	public abstract partial class NetworkAudioLowPassFilterBehavior : NetworkBehavior
 	{
-		public const byte RPC_ATTACH = 0 + 5;
-		public const byte RPC_DETACH = 1 + 5;
-		public const byte RPC_FETCH_SOURCE = 2 + 5;
-		public const byte RPC_PLAY = 3 + 5;
-		public const byte RPC_PAUSE = 4 + 5;
 		
-		public NetworkAudioProfileNetworkObject networkObject = null;
+		public NetworkAudioLowPassFilterNetworkObject networkObject = null;
 
 		public override void Initialize(NetworkObject obj)
 		{
@@ -22,15 +17,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (networkObject != null && networkObject.AttachedBehavior != null)
 				return;
 			
-			networkObject = (NetworkAudioProfileNetworkObject)obj;
+			networkObject = (NetworkAudioLowPassFilterNetworkObject)obj;
 			networkObject.AttachedBehavior = this;
 
 			base.SetupHelperRpcs(networkObject);
-			networkObject.RegisterRpc("Attach", Attach, typeof(uint));
-			networkObject.RegisterRpc("Detach", Detach, typeof(uint));
-			networkObject.RegisterRpc("FetchSource", FetchSource, typeof(string), typeof(int));
-			networkObject.RegisterRpc("Play", Play, typeof(int));
-			networkObject.RegisterRpc("Pause", Pause);
 
 			networkObject.onDestroy += DestroyGameObject;
 
@@ -86,7 +76,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		public override void Initialize(NetWorker networker, byte[] metadata = null)
 		{
-			Initialize(new NetworkAudioProfileNetworkObject(networker, createCode: TempAttachCode, metadata: metadata));
+			Initialize(new NetworkAudioLowPassFilterNetworkObject(networker, createCode: TempAttachCode, metadata: metadata));
 		}
 
 		private void DestroyGameObject(NetWorker sender)
@@ -97,7 +87,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		public override NetworkObject CreateNetworkObject(NetWorker networker, int createCode, byte[] metadata = null)
 		{
-			return new NetworkAudioProfileNetworkObject(networker, this, createCode, metadata);
+			return new NetworkAudioLowPassFilterNetworkObject(networker, this, createCode, metadata);
 		}
 
 		protected override void InitializedTransform()
@@ -105,31 +95,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			networkObject.SnapInterpolations();
 		}
 
-		/// <summary>
-		/// Arguments:
-		/// uint netId
-		/// </summary>
-		public abstract void Attach(RpcArgs args);
-		/// <summary>
-		/// Arguments:
-		/// uint netId
-		/// </summary>
-		public abstract void Detach(RpcArgs args);
-		/// <summary>
-		/// Arguments:
-		/// string uri
-		/// int type
-		/// </summary>
-		public abstract void FetchSource(RpcArgs args);
-		/// <summary>
-		/// Arguments:
-		/// int timeSamples
-		/// </summary>
-		public abstract void Play(RpcArgs args);
-		/// <summary>
-		/// Arguments:
-		/// </summary>
-		public abstract void Pause(RpcArgs args);
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}

@@ -51,6 +51,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new TestNetworkObject(networker, id, frame);
 						break;
+					case NetworkAudioLowPassFilterNetworkObject.IDENTITY:
+						availableCallback = true;
+						obj = new NetworkAudioLowPassFilterNetworkObject(networker, id, frame);
+						break;
 				}
 
 				if (!availableCallback)
