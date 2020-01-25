@@ -13,9 +13,9 @@ public class NetworkAudioProfile : NetworkAudioProfileBehavior
 	public AudioSource Source { get; private set; } = null;
 	public NetworkingPlayer MyPlayer => networkObject.Networker.GetPlayerById(networkObject.MyPlayerId);
 
-	[field: SerializeField, ShowProperty, StackableField]
+	[field: SerializeField, IsAutoProperty, Disable, StackableField]
 	public string URI { get; private set; } = null;
-	[field: SerializeField, ShowProperty, StackableField]
+	[field: SerializeField, IsAutoProperty, Disable, StackableField]
 	public AudioType AudioFormat { get; private set; } = AudioType.UNKNOWN;
 
 	HashSet<uint> ToAttachIds = new HashSet<uint>();
